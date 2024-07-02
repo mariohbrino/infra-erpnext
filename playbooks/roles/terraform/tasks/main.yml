@@ -1,0 +1,7 @@
+---
+- name: Install terraform
+  apt:
+    pkg:
+      - terraform
+    state: latest
+    update_cache: true

@@ -1,0 +1,44 @@
+---
+- name: Check that spectrum.local site is installed
+  stat:
+    path: /home/{{ ansible_user }}/spectrum/site/spectrum.local
+  register: site_installed
+
+- name: Create spectrum site
+  become_user: "{{ ansible_user }}"
+  shell: |
+    cd /home/{{ ansible_user }}/spectrum
+    bench new-site spectrum.local --mariadb-root-username root --mariadb-root-password password --admin-password password --force
+    bench --site spectrum.local enable-scheduler
+    bench --site spectrum.local set-maintenance-mode off
+  when: site_installed.stat.exists == False
+
+- name: Install erpnext on spectrum site
+  become_user: "{{ ansible_user }}"
+  shell: |
+    cd /home/{{ ansible_user }}/spectrum
+    bench --site spectrum.local install-app erpnext
+  when: site_installed.stat.exists == False
+
+- name: Install payments on spectrum site
+  become_user: "{{ ansible_user }}"
+  shell: |
+    cd /home/{{ ansible_user }}/spectrum
+    bench --site spectrum.local install-app payments
+  when: site_installed.stat.exists == False
+
+- name: Setup spectrum producion
+  become_user: "{{ ansible_user }}"
+  shell: |
+    cd /home/{{ ansible_user }}/spectrum
+    sudo bench setup supervisor
+    sudo bench setup redis
+    sudo bench setup production {{ ansible_user }} --yes
+  when: site_installed.stat.exists == False
+
+- name: Install hrms on spectrum site
+  become_user: "{{ ansible_user }}"
+  shell: |
+    cd /home/{{ ansible_user }}/spectrum
+    bench --site spectrum.local install-app hrms
+  when: site_installed.stat.exists == False

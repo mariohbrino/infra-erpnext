@@ -1,0 +1,10 @@
+---
+- name: Install certbot
+  become_user: root
+  become: yes
+  apt:
+    pkg:
+      - certbot
+      - python3-certbot-nginx
+    state: present
+    force: yes

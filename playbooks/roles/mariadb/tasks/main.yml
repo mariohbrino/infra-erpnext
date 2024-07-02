@@ -1,0 +1,71 @@
+---
+- name: Install mariadb server
+  become_user: root
+  become: yes
+  apt:
+    pkg:
+      - libmysqlclient-dev
+      - mariadb-client
+      - mariadb-server
+      - python3-mysqldb
+      - python3-pymysql
+    state: latest
+    update_cache: yes
+
+- name: Add configuration
+  become_user: root
+  become: yes
+  template:
+    src: files/my.cnf
+    dest: /etc/mysql/
+    owner: root
+    group: root
+    mode: 0644
+
+- name: Removes anonymous user account for localhost
+  mysql_user:
+    check_implicit_admin: true
+    login_password: 'password'
+    name: ''
+    host: localhost
+    state: absent
+    login_unix_socket: /run/mysqld/mysqld.sock
+
+- name: Removes all anonymous user accounts
+  mysql_user:
+    check_implicit_admin: true
+    login_password: 'password'
+    name: ''
+    host_all: true
+    state: absent
+    login_unix_socket: /run/mysqld/mysqld.sock
+
+- name: Remove test database
+  mysql_db:
+    check_implicit_admin: true
+    login_password: 'password'
+    db: test
+    state: absent
+    login_unix_socket: /run/mysqld/mysqld.sock
+
+- name: Change root user password and permissions
+  mysql_user:
+    check_implicit_admin: true
+    host: "{{ item }}"
+    login_user: root
+    login_password: 'password'
+    name: root
+    password: 'password'
+    priv: "*.*:ALL,GRANT"
+    login_unix_socket: /run/mysqld/mysqld.sock
+  with_items:
+    - 127.0.0.1
+    - ::1
+    - localhost
+
+- name: Restart and enable mysql
+  become: yes
+  service:
+    name: mysql
+    state: restarted
+    enabled: yes

@@ -1,0 +1,7 @@
+---
+- name: Install awscli
+  apt:
+    pkg:
+      - awscli
+    state: latest
+    update_cache: true

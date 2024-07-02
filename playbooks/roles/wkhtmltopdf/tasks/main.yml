@@ -1,0 +1,11 @@
+---
+- name: Install wkhtmltopdf
+  become_user: root
+  become: yes
+  apt: 
+    pkg:
+      - xvfb
+      - libfontconfig
+      - wkhtmltopdf
+    state: latest
+    update_cache: true

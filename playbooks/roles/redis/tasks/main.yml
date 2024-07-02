@@ -1,0 +1,8 @@
+---
+- name: Install redis-server
+  become_user: root
+  become: yes
+  apt: 
+    pkg: redis-server 
+    state: present 
+    force: yes

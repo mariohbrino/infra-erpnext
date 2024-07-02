@@ -1,0 +1,12 @@
+---
+- name: Install fail2ban
+  become_user: root
+  become: yes
+  apt: 
+    name: fail2ban
+    state: present
+
+- name: Enable fail2ban
+  service:
+    name: fail2ban
+    enabled: yes

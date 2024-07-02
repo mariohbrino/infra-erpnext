@@ -1,0 +1,6 @@
+---
+- name: Install bench
+  become_user: root
+  become: yes
+  shell: |
+    pip3 install frappe-bench

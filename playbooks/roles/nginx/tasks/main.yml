@@ -1,0 +1,28 @@
+---
+- name: Install nginx
+  become_user: root
+  become: yes
+  apt: 
+    pkg: nginx
+    state: latest
+    update_cache: true
+
+- name: Disable default config
+  become_user: root
+  become: yes
+  file: 
+    dest: /etc/nginx/sites-enabled/default
+    state: absent
+
+- name: Restart and enable nginx
+  become: yes
+  service:
+    name: nginx
+    state: restarted
+    enabled: yes
+
+- name: Reload Nginx
+  become: yes
+  service: 
+    name: nginx 
+    state: reloaded
