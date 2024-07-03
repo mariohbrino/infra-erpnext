@@ -12,6 +12,10 @@ setup: # Initial setup for infrastructure as code. [Initial set up and Ubuntu/De
 init: # Prepare your working directory for other command.
 	@terraform -chdir=terraform init
 
+settings: # Copy vagrant settings template files.
+	@cp .env.example .env
+	@cp servers.json.example servers.json
+
 vars: # Copy template vars. [Make sure to add your on private key on the variable]
 	@cp terraform/erpnext.tfvars.example terraform/erpnext.tfvars
 

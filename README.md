@@ -37,3 +37,25 @@ make apply          # Create or update infrastructure.
 make inventory      # List the aws inventory.
 make provision      # Provision the aws erpnext instance.
 ```
+
+## Vagrant
+
+Install vagrant-env plugin.
+```bash
+vagrant plugin install vagrant-env
+```
+
+Common commands to work witn vagrant.
+```bash
+make settings       # Copy vagrant settings template files.
+vagrant up          # create, download and start virtual machine.
+vagrant provision   # provision vagrant virtual machine.
+vagrant status      # show status of virtual machines.
+vagrant halt        
+vagrant suspend     # suspend virtual machine.
+vagrant resume      # resume virtual machine that is suspend.
+vagrant ssh         # ssh into the given machine.
+vagrant destroy -f  # force delete the virtual machine.
+```
+
+> Make sure to update the files 

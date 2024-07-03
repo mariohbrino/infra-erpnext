@@ -1,0 +1,13 @@
+[
+  {
+    "name": "erpnext",
+    "box": "bento/ubuntu-22.04",
+    "hostname": "ip-192-168-1-10",
+    "network": "public_network",
+    "bridge": "eno1",
+    "ip": "192.168.1.10",
+    "cpu": "2",
+    "memory": "4096",
+    "provision": "playbooks/vagrant.yml"
+  }
+]
