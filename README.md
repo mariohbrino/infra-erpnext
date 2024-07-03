@@ -58,4 +58,4 @@ vagrant ssh         # ssh into the given machine.
 vagrant destroy -f  # force delete the virtual machine.
 ```
 
-> Make sure to update the files 
+> Make sure to adjust the setting files `.env` and `server.json` for your environment.
