@@ -1,1 +1,4 @@
-key_name = "your-public-key-here"
+key_name                  = "your-public-key-here"
+infra_role                = "web-server"
+instance_size             = "t3.small"
+instance_root_device_size = 8

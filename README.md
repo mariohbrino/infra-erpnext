@@ -31,7 +31,7 @@ Create the infrastrucure and provision on AWS.
 ```bash
 make setup          # Initial setup for infrastructure as code. [Initial set up and Ubuntu/Debian Based]
 make init           # Prepare your working directory for other command.
-make vars           # Copy template vars. [Make sure to add your on private key on the variable]
+make vars           # Copy template vars. [Make sure to add your on publick ssh key on the variable]
 make plan           # Show changes required by the current configuration.
 make apply          # Create or update infrastructure.
 make inventory      # List the aws inventory.
