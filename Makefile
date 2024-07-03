@@ -9,6 +9,9 @@ help: # Show a list of commands available.
 setup: # Initial setup for infrastructure as code. [Initial set up and Ubuntu/Debian Based]
 	@ansible-playbook -i playbooks/inventory.yml playbooks/setup.yml --extra-vars ansible_user=$$(id -nu) -K
 
+local: # Initial setup for local environment. [Initial set up and Ubuntu/Debian Based]
+	@ansible-playbook -i playbooks/inventory.yml playbooks/local.yml --extra-vars ansible_user=$$(id -nu) -K
+
 init: # Prepare your working directory for other command.
 	@terraform -chdir=terraform init
 

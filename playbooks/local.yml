@@ -1,0 +1,18 @@
+---
+- name: Deploy erpnext on local
+  hosts: localhost
+  gather_facts: true
+  become_user: root
+  become: yes
+  roles:
+    - { role: common,       tags: common      }
+    - { role: nginx,        tags: nginx       }
+    - { role: node,         tags: node        }
+    - { role: redis,        tags: redis       }
+    - { role: supervisor,   tags: supervisor  }
+    - { role: fail2ban,     tags: fail2ban    }
+    - { role: wkhtmltopdf,  tags: wkhtmltopdf }
+    - { role: mariadb,      tags: mariadb     }
+    - { role: bench,        tags: bench       }
+    - { role: erpnext,      tags: erpnext     }
+    - { role: site,         tags: site        }
