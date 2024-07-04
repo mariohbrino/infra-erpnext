@@ -27,6 +27,8 @@ Install terraform collection for ansible. To check more information access this 
 ansible-galaxy collection install cloud.terraform
 ```
 
+> Ansible requirement is version `>=2.15.0`.
+
 Create the infrastrucure and provision on AWS.
 ```bash
 make setup          # Initial setup for infrastructure as code. [Initial set up and Ubuntu/Debian Based]

@@ -29,7 +29,7 @@ apply: # Create or update infrastructure.
 	@terraform -chdir=terraform apply -var-file="erpnext.tfvars"
 
 destroy: # Destroy previously-created infrastructure.
-	@terraform -chdir=terraform destroy
+	@terraform -chdir=terraform destroy -var-file="erpnext.tfvars"
 
 validate: # Check whether the configuration is valid.
 	@terraform -chdir=terraform validate
