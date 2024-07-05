@@ -8,6 +8,7 @@ help: # Show a list of commands available.
 
 setup: # Initial setup for infrastructure as code. [Initial set up and Ubuntu/Debian Based]
 	@ansible-playbook -i playbooks/inventory.yml playbooks/setup.yml --extra-vars ansible_user=$$(id -nu) -K
+	@ansible-galaxy collection install cloud.terraform
 
 local: # Initial setup for local environment. [Initial set up and Ubuntu/Debian Based]
 	@ansible-playbook -i playbooks/inventory.yml playbooks/local.yml --extra-vars ansible_user=$$(id -nu) -K
@@ -18,8 +19,14 @@ init: # Prepare your working directory for other command.
 settings: # Copy vagrant settings template files.
 	@cp .env.example .env
 	@cp servers.json.example servers.json
+	@vagrant plugin install vagrant-env
 
-vars: # Copy template vars. [Make sure to add your on private key on the variable]
+key: # Create SSH key and save to ~/.ssh folder.
+	@ssh-keygen -t ed25519 -C "erpnext" -f erpnext
+	@mv erpnext* ~/.ssh
+	@cat ~/.ssh/erpnext.pub
+
+copy: # Copy terraform vars template. [Make sure to add your on private key on the variable]
 	@cp terraform/erpnext.tfvars.example terraform/erpnext.tfvars
 
 plan: # Show changes required by the current configuration.
