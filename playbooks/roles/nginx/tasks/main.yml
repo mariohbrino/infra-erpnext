@@ -13,6 +13,11 @@
   ansible.builtin.file:
     dest: /etc/nginx/sites-enabled/default
     state: absent
+  register: nginx_config
+
+- name: Check if default config was removed
+  debug:
+    var: nginx_config.changed
 
 - name: Restart and enable nginx
   become: true
@@ -20,9 +25,4 @@
     name: nginx
     state: restarted
     enabled: true
-
-- name: Reload Nginx
-  become: true
-  ansible.builtin.service:
-    name: nginx
-    state: reloaded
+  when: nginx_config.changed

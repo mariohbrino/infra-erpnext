@@ -22,6 +22,19 @@
     group: root
     mode: "0644"
     backup: true
+  register: mysql_config
+
+- name: Check if mysql config file has changed
+  debug:
+    var: mysql_config.changed
+
+- name: Restart and enable mysql
+  become: true
+  ansible.builtin.service:
+    name: mysql
+    state: restarted
+    enabled: true
+  when: mysql_config.changed
 
 - name: Removes anonymous user account for localhost
   community.mysql.mysql_user:
@@ -63,10 +76,3 @@
     - 127.0.0.1
     - ::1
     - localhost
-
-- name: Restart and enable mysql
-  become: true
-  ansible.builtin.service:
-    name: mysql
-    state: restarted
-    enabled: true
