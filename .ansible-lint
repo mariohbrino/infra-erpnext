@@ -1,0 +1,8 @@
+---
+# .ansible-lint
+exclude_paths:
+  - .vagrant
+  - packer
+  - playbooks/inventory.yml
+  - playbooks/terraform.yml
+  - terraform

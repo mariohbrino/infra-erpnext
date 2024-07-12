@@ -3,5 +3,5 @@
   ansible.builtin.apt:
     pkg:
       - terraform
-    state: latest
+    state: present
     update_cache: true

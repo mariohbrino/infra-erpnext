@@ -1,44 +1,58 @@
 ---
 - name: Check that erpnext.local site is installed
   ansible.builtin.stat:
-    path: /home/{{ ansible_user }}/erpnext/site/erpnext.local
+    path: /home/{{ ansible_user }}/erpnext/sites/erpnext.local
   register: site_installed
 
+- name: Display if site exists
+  ansible.builtin.debug:
+    var: site_installed.stat.exists
+
 - name: Create erpnext site
+  become: false
   become_user: "{{ ansible_user }}"
   ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     bench new-site erpnext.local --mariadb-root-username root --mariadb-root-password password --admin-password password --force
     bench --site erpnext.local enable-scheduler
     bench --site erpnext.local set-maintenance-mode off
-  when: site_installed.stat.exists == False
+  when: not site_installed.stat.exists
+  changed_when: site_installed.stat.exists
 
 - name: Install erpnext on erpnext site
+  become: false
   become_user: "{{ ansible_user }}"
   ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     bench --site erpnext.local install-app erpnext
-  when: site_installed.stat.exists == False
+  when: not site_installed.stat.exists
+  changed_when: site_installed.stat.exists
 
 - name: Install payments on erpnext site
+  become: false
   become_user: "{{ ansible_user }}"
   ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     bench --site erpnext.local install-app payments
-  when: site_installed.stat.exists == False
+  when: not site_installed.stat.exists
+  changed_when: site_installed.stat.exists
 
 - name: Setup erpnext producion
+  become: false
   become_user: "{{ ansible_user }}"
   ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     sudo bench setup supervisor
     sudo bench setup redis
     sudo bench setup production {{ ansible_user }} --yes
-  when: site_installed.stat.exists == False
+  when: not site_installed.stat.exists
+  changed_when: site_installed.stat.exists
 
 - name: Install hrms on erpnext site
+  become: false
   become_user: "{{ ansible_user }}"
   ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     bench --site erpnext.local install-app hrms
-  when: site_installed.stat.exists == False
+  when: not site_installed.stat.exists
+  changed_when: site_installed.stat.exists

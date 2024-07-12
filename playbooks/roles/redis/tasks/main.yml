@@ -1,8 +1,8 @@
 ---
 - name: Install redis-server
   become_user: root
-  become: yes
+  become: true
   ansible.builtin.apt:
     pkg: redis-server
     state: present
-    force: yes
+    force: true

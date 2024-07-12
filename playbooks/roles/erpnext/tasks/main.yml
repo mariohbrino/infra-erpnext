@@ -4,38 +4,50 @@
     path: /home/{{ ansible_user }}/erpnext
   register: erpnext_initiated
 
+- name: Display if bench repo exists
+  ansible.builtin.debug:
+    var: erpnext_initiated.stat.exists
+
 - name: Init erpnext bench repository
+  become: true
   become_user: "{{ ansible_user }}"
-  become: yes
   ansible.builtin.shell: |
     cd /home/{{ ansible_user }}
     bench init erpnext --frappe-branch version-15 --ignore-exist
-  when: erpnext_initiated.stat.exists == False
+  when: not erpnext_initiated.stat.exists
+  changed_when: erpnext_initiated.stat.exists
 
 - name: Change permissions
   ansible.builtin.file:
     dest: /home/{{ ansible_user }}
     mode: o=rX
-    recurse: yes
-  when: erpnext_initiated.stat.exists == False
+    recurse: true
+  when: not erpnext_initiated.stat.exists
+  changed_when: erpnext_initiated.stat.exists
 
 - name: Import erpnext application
+  become: false
   become_user: "{{ ansible_user }}"
   ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     bench get-app --branch version-15 erpnext
-  when: erpnext_initiated.stat.exists == False
+  when: not erpnext_initiated.stat.exists
+  changed_when: erpnext_initiated.stat.exists
 
 - name: Import payments application
+  become: false
   become_user: "{{ ansible_user }}"
   ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     bench get-app payments --branch version-15
-  when: erpnext_initiated.stat.exists == False
+  when: not erpnext_initiated.stat.exists
+  changed_when: erpnext_initiated.stat.exists
 
 - name: Import hrms application
+  become: false
   become_user: "{{ ansible_user }}"
   ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     bench get-app hrms --branch version-15
-  when: erpnext_initiated.stat.exists == False
+  when: not erpnext_initiated.stat.exists
+  changed_when: erpnext_initiated.stat.exists

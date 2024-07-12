@@ -1,8 +1,8 @@
 ---
 - name: Install supervisor
   become_user: root
-  become: yes
+  become: true
   ansible.builtin.apt:
     pkg: supervisor
     state: present
-    force: yes
+    force: true

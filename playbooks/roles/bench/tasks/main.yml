@@ -1,5 +1,6 @@
 ---
 - name: Install bench
   become_user: root
-  become: yes
-  ansible.builtin.shell: pip3 install frappe-bench
+  become: true
+  ansible.builtin.pip:
+    name: frappe-bench
