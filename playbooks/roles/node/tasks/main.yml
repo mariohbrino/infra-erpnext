@@ -11,7 +11,7 @@
   become_user: root
   become: true
   ansible.builtin.apt_repository:
-    repo: deb https://deb.nodesource.com/node_18.x focal main
+    repo: deb https://deb.nodesource.com/node_20.x focal main
     update_cache: true
 
 - name: Install nodejs
