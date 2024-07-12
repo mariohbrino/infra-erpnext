@@ -1,6 +1,6 @@
 ---
 - name: Install awscli
-  apt:
+  ansible.builtin.apt:
     pkg:
       - awscli
     state: latest

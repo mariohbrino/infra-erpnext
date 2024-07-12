@@ -40,7 +40,7 @@ make settings       # Copy vagrant settings template files.
 vagrant up          # create, download and start virtual machine.
 vagrant provision   # provision vagrant virtual machine.
 vagrant status      # show status of virtual machines.
-vagrant halt        
+vagrant halt        # stop all virtual machines.
 vagrant suspend     # suspend virtual machine.
 vagrant resume      # resume virtual machine that is suspend.
 vagrant ssh         # ssh into the given machine.

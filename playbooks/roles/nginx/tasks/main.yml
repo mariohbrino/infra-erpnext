@@ -2,7 +2,7 @@
 - name: Install nginx
   become_user: root
   become: yes
-  apt: 
+  ansible.builtin.apt:
     pkg: nginx
     state: latest
     update_cache: true
@@ -10,19 +10,19 @@
 - name: Disable default config
   become_user: root
   become: yes
-  file: 
+  ansible.builtin.file:
     dest: /etc/nginx/sites-enabled/default
     state: absent
 
 - name: Restart and enable nginx
   become: yes
-  service:
+  ansible.builtin.service:
     name: nginx
     state: restarted
     enabled: yes
 
 - name: Reload Nginx
   become: yes
-  service: 
-    name: nginx 
+  ansible.builtin.service:
+    name: nginx
     state: reloaded

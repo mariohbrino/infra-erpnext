@@ -2,7 +2,7 @@
 - name: Add nodejs apt key
   become_user: root
   become: yes
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
     keyring: /etc/apt/trusted.gpg.d/nodejs.gpg
     state: present
@@ -10,14 +10,14 @@
 - name: Add nodejs ppa
   become_user: root
   become: yes
-  apt_repository:
+  ansible.builtin.apt_repository:
     repo: deb https://deb.nodesource.com/node_18.x focal main
     update_cache: yes
 
 - name: Install nodejs
   become_user: root
   become: yes
-  apt: 
+  ansible.builtin.apt:
     pkg: nodejs
     state: present
     update_cache: yes
@@ -25,4 +25,4 @@
 - name: Install yarn
   become_user: root
   become: yes
-  command: npm install -g yarn
+  ansible.builtin.shell: npm install -g yarn

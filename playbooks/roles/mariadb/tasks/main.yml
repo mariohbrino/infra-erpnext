@@ -2,7 +2,7 @@
 - name: Install mariadb server
   become_user: root
   become: yes
-  apt:
+  ansible.builtin.apt:
     pkg:
       - libmysqlclient-dev
       - mariadb-client
@@ -15,12 +15,13 @@
 - name: Add configuration
   become_user: root
   become: yes
-  template:
+  ansible.builtin.template:
     src: files/my.cnf
     dest: /etc/mysql/
     owner: root
     group: root
     mode: 0644
+    backup: true
 
 - name: Removes anonymous user account for localhost
   mysql_user:
@@ -65,7 +66,7 @@
 
 - name: Restart and enable mysql
   become: yes
-  service:
+  ansible.builtin.service:
     name: mysql
     state: restarted
     enabled: yes

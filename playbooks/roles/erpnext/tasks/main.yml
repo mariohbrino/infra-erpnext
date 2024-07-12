@@ -1,19 +1,19 @@
 ---
 - name: Check that bench repo is initiated
-  stat:
+  ansible.builtin.stat:
     path: /home/{{ ansible_user }}/erpnext
   register: erpnext_initiated
 
 - name: Init erpnext bench repository
   become_user: "{{ ansible_user }}"
   become: yes
-  shell: |
+  ansible.builtin.shell: |
     cd /home/{{ ansible_user }}
     bench init erpnext --frappe-branch version-15 --ignore-exist
   when: erpnext_initiated.stat.exists == False
 
 - name: Change permissions
-  file:
+  ansible.builtin.file:
     dest: /home/{{ ansible_user }}
     mode: o=rX
     recurse: yes
@@ -21,21 +21,21 @@
 
 - name: Import erpnext application
   become_user: "{{ ansible_user }}"
-  shell: |
+  ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     bench get-app --branch version-15 erpnext
   when: erpnext_initiated.stat.exists == False
 
 - name: Import payments application
   become_user: "{{ ansible_user }}"
-  shell: |
+  ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     bench get-app payments --branch version-15
   when: erpnext_initiated.stat.exists == False
 
 - name: Import hrms application
   become_user: "{{ ansible_user }}"
-  shell: |
+  ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     bench get-app hrms --branch version-15
   when: erpnext_initiated.stat.exists == False

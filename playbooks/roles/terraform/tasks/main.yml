@@ -1,6 +1,6 @@
 ---
 - name: Install terraform
-  apt:
+  ansible.builtin.apt:
     pkg:
       - terraform
     state: latest

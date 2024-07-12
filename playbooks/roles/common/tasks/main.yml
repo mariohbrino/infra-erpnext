@@ -2,7 +2,7 @@
 - name: Install common dependencies
   become_user: root
   become: yes
-  apt:
+  ansible.builtin.apt:
     pkg:
       - build-essential
       - libffi-dev

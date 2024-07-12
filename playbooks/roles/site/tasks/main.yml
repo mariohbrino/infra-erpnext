@@ -1,12 +1,12 @@
 ---
 - name: Check that erpnext.local site is installed
-  stat:
+  ansible.builtin.stat:
     path: /home/{{ ansible_user }}/erpnext/site/erpnext.local
   register: site_installed
 
 - name: Create erpnext site
   become_user: "{{ ansible_user }}"
-  shell: |
+  ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     bench new-site erpnext.local --mariadb-root-username root --mariadb-root-password password --admin-password password --force
     bench --site erpnext.local enable-scheduler
@@ -15,21 +15,21 @@
 
 - name: Install erpnext on erpnext site
   become_user: "{{ ansible_user }}"
-  shell: |
+  ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     bench --site erpnext.local install-app erpnext
   when: site_installed.stat.exists == False
 
 - name: Install payments on erpnext site
   become_user: "{{ ansible_user }}"
-  shell: |
+  ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     bench --site erpnext.local install-app payments
   when: site_installed.stat.exists == False
 
 - name: Setup erpnext producion
   become_user: "{{ ansible_user }}"
-  shell: |
+  ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     sudo bench setup supervisor
     sudo bench setup redis
@@ -38,7 +38,7 @@
 
 - name: Install hrms on erpnext site
   become_user: "{{ ansible_user }}"
-  shell: |
+  ansible.builtin.shell: |
     cd /home/{{ ansible_user }}/erpnext
     bench --site erpnext.local install-app hrms
   when: site_installed.stat.exists == False

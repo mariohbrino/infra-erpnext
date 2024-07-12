@@ -2,11 +2,11 @@
 - name: Install fail2ban
   become_user: root
   become: yes
-  apt: 
+  ansible.builtin.apt:
     name: fail2ban
     state: present
 
 - name: Enable fail2ban
-  service:
+  ansible.builtin.service:
     name: fail2ban
     enabled: yes

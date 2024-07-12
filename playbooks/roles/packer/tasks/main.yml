@@ -1,6 +1,6 @@
 ---
 - name: Install packer
-  apt:
+  ansible.builtin.apt:
     pkg:
       - packer
     state: latest
