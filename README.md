@@ -1,5 +1,9 @@
 # Deploy ERPNext
 
+ERPNext is a free and open-source integrated Enterprise resource planning software developed by an Indian software company Frappe Technologies Pvt. Ltd. It is built on the MariaDB database system using Frappe, a Python based server-side framework.
+
+> For more information about Frappe Framework check the link [here](https://frappeframework.com/docs).
+
 ## Initial Settings
 
 Install necessary dependencies.
