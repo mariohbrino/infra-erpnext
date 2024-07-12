@@ -22,19 +22,10 @@
     group: root
     mode: "0644"
     backup: true
-  register: mysql_config
+  notify: Restart and enable mysql
 
-- name: Check if mysql config file has changed
-  debug:
-    var: mysql_config.changed
-
-- name: Restart and enable mysql
-  become: true
-  ansible.builtin.service:
-    name: mysql
-    state: restarted
-    enabled: true
-  when: mysql_config.changed
+- name: Flush Handlers
+  ansible.builtin.meta: flush_handlers
 
 - name: Removes anonymous user account for localhost
   community.mysql.mysql_user:
