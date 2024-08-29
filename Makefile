@@ -7,19 +7,17 @@ help: # Show a list of commands available.
 	@grep -E '^[a-zA-Z0-9 -]+:.*#'  Makefile | while read -r l; do printf "\033[1;32m$$(echo $$l | cut -f 1 -d':')\033[00m:$$(echo $$l | cut -f 2- -d'#')\n"; done
 
 setup: # Initial setup for infrastructure as code. [Initial set up and Ubuntu/Debian Based]
-	@ansible-playbook -i playbooks/inventory.yml playbooks/setup.yml --extra-vars ansible_user=$$(id -nu) -K
+	@ansible-playbook playbooks/setup.yml --extra-vars ansible_user=$$(id -nu) -K
 	@ansible-galaxy collection install cloud.terraform
 
 local: # Initial setup for local environment. [Initial set up and Ubuntu/Debian Based]
-	@ansible-playbook -i playbooks/inventory.yml playbooks/local.yml --extra-vars ansible_user=$$(id -nu) -K
+	@ansible-playbook playbooks/local.yml --extra-vars ansible_user=$$(id -nu) -K
 
 init: # Prepare your working directory for other command.
 	@terraform -chdir=terraform init
 
 settings: # Copy vagrant settings template files.
-	@cp .env.example .env
 	@cp servers.json.example servers.json
-	@vagrant plugin install vagrant-env
 
 key: # Create SSH key and save to ~/.ssh folder.
 	@ssh-keygen -t ed25519 -C "erpnext" -f erpnext
@@ -40,6 +38,9 @@ destroy: # Destroy previously-created infrastructure.
 
 validate: # Check whether the configuration is valid.
 	@terraform -chdir=terraform validate
+	@ansible-lint
+	@ansible-playbook playbooks/setup.yml --syntax-check
+	@ansible-playbook playbooks/local.yml --syntax-check
 
 format: # Reformat your configuration in the standard style.
 	@terraform -chdir=terraform fmt .

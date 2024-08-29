@@ -6,15 +6,14 @@ Vagrant.configure("2") do |config|
 
   servers.each do |machine|
     config.vm.define machine["name"] do |node|
-      config.env.enable
       node.vm.box = machine["box"]
       node.vm.hostname = machine["hostname"]
 
       node.vm.network machine["network"],
         ip: machine["ip"],
-        bridge: ENV["BRIDGE"],
-        gateway: ENV["GATEWAY"],
-        netmask: ENV["NETMASK"]
+        bridge: machine["bridge"],
+        gateway: machine["gateway"],
+        netmask: machine["netmask"]
 
       node.vm.provider "virtualbox" do |vm|
         vm.cpus = machine["cpu"]

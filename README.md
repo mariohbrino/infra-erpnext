@@ -11,6 +11,13 @@ Install necessary dependencies.
 sudo apt -y install ansible make vagrant virtualbox
 ```
 
+**Option**: install ansible via pip3, this will also install ansible-lint.
+```bash
+pip3 install ansible-dev-tools
+echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.profile
+source ~/.profile
+```
+
 Configure AWS credentials.
 ```bash
 aws configure --profile erpnext
@@ -51,4 +58,4 @@ vagrant ssh         # ssh into the given machine.
 vagrant destroy -f  # force delete the virtual machine.
 ```
 
-> Make sure to adjust the setting files `.env` and `server.json` for your environment.
+> Make sure to adjust the settings on `server.json` file for your environment.

@@ -1,0 +1,7 @@
+---
+- name: Install awscli
+  ansible.builtin.apt:
+    pkg:
+      - awscli
+    state: present
+    update_cache: true

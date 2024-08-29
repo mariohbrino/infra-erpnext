@@ -1,8 +1,4 @@
 ---
-- name: Install redis-server
-  become_user: root
-  become: true
-  ansible.builtin.apt:
-    pkg: redis-server
-    state: present
-    force: true
+- name: Configure Debian Environment
+  ansible.builtin.include_tasks: setup-debian.yml
+  when: ansible_os_family == 'Debian'
