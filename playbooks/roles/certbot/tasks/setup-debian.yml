@@ -1,0 +1,10 @@
+---
+- name: Install certbot
+  become_user: root
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - certbot
+      - python3-certbot-nginx
+    state: present
+    force: true

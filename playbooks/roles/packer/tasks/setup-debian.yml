@@ -1,0 +1,7 @@
+---
+- name: Install packer
+  ansible.builtin.apt:
+    pkg:
+      - packer
+    state: present
+    update_cache: true

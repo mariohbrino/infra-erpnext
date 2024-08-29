@@ -1,7 +1,4 @@
 ---
-- name: Install terraform
-  ansible.builtin.apt:
-    pkg:
-      - terraform
-    state: present
-    update_cache: true
+- name: Configure Debian Environment
+  ansible.builtin.include_tasks: setup-debian.yml
+  when: ansible_os_family == 'Debian'

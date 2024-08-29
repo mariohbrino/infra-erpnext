@@ -1,19 +1,4 @@
 ---
-- name: Install common dependencies
-  become_user: root
-  become: true
-  ansible.builtin.apt:
-    pkg:
-      - build-essential
-      - libffi-dev
-      - libssl-dev
-      - python3-dev
-      - python3-pip
-      - python3-setuptools
-      - python3.10-dev
-      - python3.10-distutils
-      - python3.10-venv
-      - software-properties-common
-    state: present
-    force: true
-    update_cache: true
+- name: Configure Debian Environment
+  ansible.builtin.include_tasks: setup-debian.yml
+  when: ansible_os_family == 'Debian'

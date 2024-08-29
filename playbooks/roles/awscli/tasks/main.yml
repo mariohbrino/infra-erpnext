@@ -1,7 +1,4 @@
 ---
-- name: Install awscli
-  ansible.builtin.apt:
-    pkg:
-      - awscli
-    state: present
-    update_cache: true
+- name: Configure Debian Environment
+  ansible.builtin.include_tasks: setup-debian.yml
+  when: ansible_os_family == 'Debian'

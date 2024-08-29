@@ -1,0 +1,7 @@
+---
+- name: Install terraform
+  ansible.builtin.apt:
+    pkg:
+      - terraform
+    state: present
+    update_cache: true

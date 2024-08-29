@@ -1,7 +1,4 @@
 ---
-- name: Install packer
-  ansible.builtin.apt:
-    pkg:
-      - packer
-    state: present
-    update_cache: true
+- name: Configure Debian Environment
+  ansible.builtin.include_tasks: setup-debian.yml
+  when: ansible_os_family == 'Debian'

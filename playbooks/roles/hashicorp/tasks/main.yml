@@ -1,12 +1,4 @@
 ---
-- name: Add hashicorp apt key
-  ansible.builtin.apt_key:
-    url: https://apt.releases.hashicorp.com/gpg
-    keyring: /etc/apt/trusted.gpg.d/hashicorp.gpg
-    state: present
-
-- name: Add hashicorp repository
-  ansible.builtin.apt_repository:
-    repo: deb https://apt.releases.hashicorp.com jammy main
-    state: present
-    update_cache: true
+- name: Configure Debian Environment
+  ansible.builtin.include_tasks: setup-debian.yml
+  when: ansible_os_family == 'Debian'

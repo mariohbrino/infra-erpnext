@@ -1,0 +1,11 @@
+---
+- name: Install wkhtmltopdf
+  become_user: root
+  become: true
+  ansible.builtin.apt:
+    pkg:
+      - xvfb
+      - libfontconfig
+      - wkhtmltopdf
+    state: present
+    update_cache: true

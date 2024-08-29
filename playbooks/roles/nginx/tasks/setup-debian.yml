@@ -1,0 +1,19 @@
+---
+- name: Install nginx
+  become_user: root
+  become: true
+  ansible.builtin.apt:
+    pkg: nginx
+    state: present
+    update_cache: true
+
+- name: Disable default config
+  become_user: root
+  become: true
+  ansible.builtin.file:
+    dest: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: Restart and enable nginx
+
+- name: Flush Handlers
+  ansible.builtin.meta: flush_handlers

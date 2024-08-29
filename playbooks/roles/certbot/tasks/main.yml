@@ -1,10 +1,4 @@
 ---
-- name: Install certbot
-  become_user: root
-  become: true
-  ansible.builtin.apt:
-    pkg:
-      - certbot
-      - python3-certbot-nginx
-    state: present
-    force: true
+- name: Configure Debian Environment
+  ansible.builtin.include_tasks: setup-debian.yml
+  when: ansible_os_family == 'Debian'
